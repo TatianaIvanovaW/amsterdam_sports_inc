@@ -1,15 +1,18 @@
 import "./App.css";
 import { Switch, Route } from "react-router-dom";
-import HomePage from "./components/HomePage";
-import UserPage from "./components/UserPage";
+import Members from "./pages/Members";
+import User from "./pages/User";
+import Sports from "./pages/Sports";
+import NavBar from "./components/NavBar";
 
 function App() {
   return (
     <div className="App">
-      <h1>Amsterdam Sports Inc</h1>
+      <NavBar />
       <Switch>
-        <Route exact path="/" component={HomePage} />
-        <Route path="/user/:id" component={UserPage} />
+        <Route path="/user/:id" component={User} />
+        <Route path="/sports" component={Sports} />
+        <Route path="/members" component={Members} />
       </Switch>
     </div>
   );
