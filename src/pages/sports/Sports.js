@@ -1,5 +1,5 @@
 import React from "react";
-import { sports } from "../data/sports";
+import { sports } from "../../data/sports";
 import { ListGroup, Row } from "react-bootstrap";
 import "./sports.css";
 
