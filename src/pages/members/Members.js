@@ -2,7 +2,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { selectAllUsers } from "../../store/users/selector";
-import { fetchUsers } from "../../store/users/action";
+import { findAllUsers, deleteUser } from "../../store/users/action";
 import { sports } from "../../data/sports";
 import { Card, Button, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
@@ -12,7 +12,7 @@ export default function Members() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchUsers());
+    dispatch(findAllUsers());
   }, [dispatch]);
 
   const users = useSelector(selectAllUsers);
@@ -38,7 +38,7 @@ export default function Members() {
 
                 <Button
                   onClick={() => {
-                    console.log("delete user", user.id);
+                    dispatch(deleteUser(user.id));
                   }}
                   variant="danger"
                 >
