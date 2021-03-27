@@ -16,9 +16,17 @@ export default function ModalMessage(props) {
           <Form>
             <Form.Group>
               <Form.Label>First name</Form.Label>
-              {/* <Form.Control type="text" placeholder={user.firstName} />
+              <Form.Control
+                type="text"
+                placeholder={props.user ? props.user.firstName : "Enter Name"}
+              />
               <Form.Label>Last name</Form.Label>
-              <Form.Control type="text" placeholder={user.lastName} /> */}
+              <Form.Control
+                type="text"
+                placeholder={
+                  props.user ? props.user.lastName : "Enter Last Name"
+                }
+              />
               <Form.Label>Sports</Form.Label>
             </Form.Group>
           </Form>

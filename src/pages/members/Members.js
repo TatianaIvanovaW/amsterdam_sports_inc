@@ -1,15 +1,18 @@
 import React from "react";
+import ModalMessage from "../../components/Modal";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { selectAllUsers } from "../../store/users/selector";
 import { findAllUsers, deleteUser } from "../../store/users/action";
-import { sports } from "../../data/sports";
-import { Card, Button, Row } from "react-bootstrap";
+import { Card, Button, Row, Modal } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import "./members.css";
 
 export default function Members() {
   const dispatch = useDispatch();
+  const handleShow = () => setShow(true);
+  const handleClose = () => setShow(false);
+  const [show, setShow] = useState(false);
 
   useEffect(() => {
     dispatch(findAllUsers());
@@ -20,7 +23,10 @@ export default function Members() {
   return (
     <div>
       <h5 className="userMargin">Our members:</h5>
-      <Button variant="success">Add a new member</Button>
+      <Button variant="success" onClick={handleShow}>
+        Add a new member
+      </Button>
+      <ModalMessage show={show} handleClose={handleClose} />
       <Row className="justify-content-md-left">
         {users.map((user) => {
           return (

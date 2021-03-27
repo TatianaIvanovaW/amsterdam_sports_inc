@@ -1,5 +1,5 @@
 import React from "react";
-import Modal from "../../components/Modal";
+import ModalMessage from "../../components/Modal";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
@@ -46,7 +46,7 @@ export default function UserPage() {
               <Button variant="info" onClick={handleShow}>
                 Edit
               </Button>
-              <Modal show={show} handleClose={handleClose} />
+              <ModalMessage show={show} user={user} handleClose={handleClose} />
             </Row>
           </Col>
         </Row>
