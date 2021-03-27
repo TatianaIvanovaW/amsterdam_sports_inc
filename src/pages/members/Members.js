@@ -1,11 +1,22 @@
 import React from "react";
-import { users } from "../../data/users";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { selectAllUsers } from "../../store/users/selector";
+import { fetchUsers } from "../../store/users/action";
 import { sports } from "../../data/sports";
 import { Card, Button, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import "./members.css";
 
 export default function Members() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchUsers());
+  }, [dispatch]);
+
+  const users = useSelector(selectAllUsers);
+
   return (
     <div>
       <h5 className="userMargin">Our members:</h5>

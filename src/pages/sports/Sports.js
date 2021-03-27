@@ -1,9 +1,17 @@
 import React from "react";
-import { sports } from "../../data/sports";
+import { useSelector, useDispatch } from "react-redux";
+import { selectAllSports } from "../../store/sports/selector";
+import { fetchSports } from "../../store/sports/action";
+import { useEffect } from "react";
 import { ListGroup, Row } from "react-bootstrap";
 import "./sports.css";
 
 export default function SportsPage() {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(fetchSports());
+  }, [dispatch]);
+  const sports = useSelector(selectAllSports);
   return (
     <div>
       <h5> We provide following sports to our members: </h5>

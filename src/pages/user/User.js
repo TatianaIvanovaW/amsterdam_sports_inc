@@ -1,16 +1,25 @@
 import React from "react";
 import { useParams } from "react-router-dom";
-import { users } from "../../data/users";
-import { sports } from "../../data/sports";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { selectUser } from "../../store/user/selector";
+import { findUser } from "../../store/user/action";
+import { selectAllSports } from "../../store/sports/selector";
+import { fetchSports } from "../../store/sports/action";
 import { Button, Image, Row, Badge, Col } from "react-bootstrap";
 import "./user.css";
 
 export default function UserPage() {
   const params = useParams();
-  const user = users.find((user) => {
-    return user.id === parseInt(params.id);
-  });
+  const dispatch = useDispatch();
+  const user = useSelector(selectUser);
+  const sports = useSelector(selectAllSports);
   console.log(user);
+  useEffect(() => {
+    dispatch(findUser(params.id));
+    dispatch(fetchSports());
+  }, [dispatch, params.id]);
+
   return (
     <div>
       <Row>
@@ -20,7 +29,7 @@ export default function UserPage() {
           </h3>
           <Row className="justify-content-md-center">
             {sports.map((sport) => {
-              return user.sportId.includes(sport.id) ? (
+              return user?.sportId.includes(sport.id) ? (
                 <Badge key={sport.id} className="badge" variant="secondary">
                   {sport.name}
                 </Badge>
