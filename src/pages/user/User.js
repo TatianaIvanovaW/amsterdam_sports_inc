@@ -1,7 +1,8 @@
 import React from "react";
+import Modal from "../../components/Modal";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { selectUser } from "../../store/user/selector";
 import { findUser } from "../../store/user/action";
 import { selectAllSports } from "../../store/sports/selector";
@@ -15,7 +16,9 @@ export default function UserPage() {
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
   const sports = useSelector(selectAllSports);
-  console.log(user);
+  const handleShow = () => setShow(true);
+  const handleClose = () => setShow(false);
+  const [show, setShow] = useState(false);
   useEffect(() => {
     dispatch(findUser(params.id));
     dispatch(fetchSports());
@@ -31,7 +34,7 @@ export default function UserPage() {
             </h3>
             <Row className="justify-content-md-center">
               {sports.map((sport) => {
-                return user?.sportId.includes(sport.id) ? (
+                return user?.sportId?.includes(sport.id) ? (
                   <Badge key={sport.id} className="badge" variant="secondary">
                     {sport.name}
                   </Badge>
@@ -40,7 +43,10 @@ export default function UserPage() {
             </Row>
             <Image className="userImage" alt="user" src={user.photo} />
             <Row className="justify-content-md-center">
-              <Button variant="info">Edit</Button>
+              <Button variant="info" onClick={handleShow}>
+                Edit
+              </Button>
+              <Modal show={show} handleClose={handleClose} />
             </Row>
           </Col>
         </Row>
