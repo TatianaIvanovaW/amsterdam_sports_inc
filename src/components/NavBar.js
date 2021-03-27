@@ -1,13 +1,14 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import { Navbar, Nav } from "react-bootstrap";
+import "./navbar.css";
 
 export default function NavBar() {
   return (
     <Navbar bg="light" variant="light">
-      <Navbar.Brand>Amsterdam Sports Inc</Navbar.Brand>
+      <Navbar.Brand className="navItem">Amsterdam Sports Inc</Navbar.Brand>
       <Nav className="mr-auto">
-        <Nav.Link>
+        <Nav.Item className="navItem">
           <NavLink
             activeStyle={{
               fontWeight: "bold",
@@ -17,8 +18,8 @@ export default function NavBar() {
           >
             Members
           </NavLink>
-        </Nav.Link>
-        <Nav.Link>
+        </Nav.Item>
+        <Nav.Item className="navItem">
           <NavLink
             activeStyle={{
               fontWeight: "bold",
@@ -28,7 +29,7 @@ export default function NavBar() {
           >
             Sports
           </NavLink>
-        </Nav.Link>
+        </Nav.Item>
       </Nav>
     </Navbar>
   );
