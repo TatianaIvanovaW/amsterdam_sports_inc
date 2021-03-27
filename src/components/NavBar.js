@@ -12,7 +12,7 @@ export default function NavBar() {
           <NavLink
             activeStyle={{
               fontWeight: "bold",
-              color: "purple",
+              color: "black",
             }}
             to="/members"
           >
@@ -23,7 +23,7 @@ export default function NavBar() {
           <NavLink
             activeStyle={{
               fontWeight: "bold",
-              color: "purple",
+              color: "black",
             }}
             to="/sports"
           >

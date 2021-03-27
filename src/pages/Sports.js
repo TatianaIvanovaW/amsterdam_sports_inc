@@ -6,6 +6,7 @@ import "./sports.css";
 export default function SportsPage() {
   return (
     <div>
+      <h5> We provide following sports to our members: </h5>
       {sports.map((sport) => {
         return (
           <Row key={sport.id} className="justify-content-md-center" lg={3}>
