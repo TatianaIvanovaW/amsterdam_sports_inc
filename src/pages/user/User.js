@@ -6,7 +6,8 @@ import { selectUser } from "../../store/user/selector";
 import { findUser } from "../../store/user/action";
 import { selectAllSports } from "../../store/sports/selector";
 import { fetchSports } from "../../store/sports/action";
-import { Button, Image, Row, Badge, Col } from "react-bootstrap";
+import { Button, Image, Row, Badge, Col, Spinner } from "react-bootstrap";
+
 import "./user.css";
 
 export default function UserPage() {
@@ -22,26 +23,30 @@ export default function UserPage() {
 
   return (
     <div>
-      <Row>
-        <Col>
-          <h3>
-            {user.firstName} {user.lastName}
-          </h3>
-          <Row className="justify-content-md-center">
-            {sports.map((sport) => {
-              return user?.sportId.includes(sport.id) ? (
-                <Badge key={sport.id} className="badge" variant="secondary">
-                  {sport.name}
-                </Badge>
-              ) : null;
-            })}
-          </Row>
-          <Image className="userImage" alt="user" src={user.photo} />
-          <Row className="justify-content-md-center">
-            <Button variant="info">Edit</Button>
-          </Row>
-        </Col>
-      </Row>
+      {user ? (
+        <Row>
+          <Col>
+            <h3>
+              {user.firstName} {user.lastName}
+            </h3>
+            <Row className="justify-content-md-center">
+              {sports.map((sport) => {
+                return user?.sportId.includes(sport.id) ? (
+                  <Badge key={sport.id} className="badge" variant="secondary">
+                    {sport.name}
+                  </Badge>
+                ) : null;
+              })}
+            </Row>
+            <Image className="userImage" alt="user" src={user.photo} />
+            <Row className="justify-content-md-center">
+              <Button variant="info">Edit</Button>
+            </Row>
+          </Col>
+        </Row>
+      ) : (
+        <Spinner animation="border" role="status"></Spinner>
+      )}
     </div>
   );
 }
