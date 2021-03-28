@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { selectAllUsers } from "../../store/users/selector";
 import { findAllUsers, deleteUser } from "../../store/users/action";
-import { Card, Button, Row, Modal } from "react-bootstrap";
+import { Card, Button, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import "./members.css";
 

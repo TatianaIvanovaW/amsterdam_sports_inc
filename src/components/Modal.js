@@ -1,10 +1,20 @@
 import React from "react";
 import { Modal, Form, Button } from "react-bootstrap";
-import { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { useState, useEffect } from "react";
+import { selectAllSports } from "../store/sports/selector";
+import { fetchSports } from "../store/sports/action";
 
 export default function ModalMessage(props) {
+  const dispatch = useDispatch();
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
+  const [sportsId, setSportsId] = useState([]);
+  const sports = useSelector(selectAllSports);
+
+  useEffect(() => {
+    dispatch(fetchSports());
+  }, [dispatch]);
 
   return (
     <div>
@@ -27,7 +37,17 @@ export default function ModalMessage(props) {
                   props.user ? props.user.lastName : "Enter Last Name"
                 }
               />
-              <Form.Label>Sports</Form.Label>
+              <Form.Label>Choose Sports</Form.Label>
+              <Form.Group>
+                {sports.map((sport) => (
+                  <Form.Check
+                    key={sport.id}
+                    inline
+                    label={sport.name}
+                    type="checkbox"
+                  />
+                ))}
+              </Form.Group>
             </Form.Group>
           </Form>
         </Modal.Body>
