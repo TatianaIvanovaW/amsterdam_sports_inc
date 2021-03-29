@@ -1,5 +1,5 @@
 import React from "react";
-import { Modal, Form, Button, Row } from "react-bootstrap";
+import { Modal, Form, Button, Row, Col } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
 import { selectAllSports } from "../store/sports/selector";
@@ -22,11 +22,13 @@ export default function ModalMessage(props) {
     props.handleClose();
 
     const newUser = {
-      id: props.user ? props.user.id : 13,
+      id: props.user ? props.user.id : parseInt(Math.random() * 1000),
       firstName: firstName ? firstName : props.user.firstName,
       lastName: lastName ? lastName : props.user.lastName,
       sportId: sportId.length > 0 ? sportId : props.user.sportId,
-      photo: props.user?.photo,
+      photo: props.user
+        ? props.user.photo
+        : "https://miro.medium.com/max/720/1*W35QUSvGpcLuxPo3SRTH4w.png",
     };
 
     dispatch(addNewUser(newUser, props.users));
@@ -107,7 +109,15 @@ export default function ModalMessage(props) {
                   label={sport.name}
                   type="checkbox"
                 />
-              ))}{" "}
+              ))}
+              <Col style={{ padding: "20px 0px 15px 20px" }}>
+                <Row>
+                  <Form.Label>Upload picture</Form.Label>
+                </Row>
+                <Row>
+                  <input type="file"></input>
+                </Row>
+              </Col>
               <Row>
                 <Button
                   style={{ margin: "10px" }}
