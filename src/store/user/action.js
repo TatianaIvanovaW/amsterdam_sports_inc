@@ -14,11 +14,8 @@ export const findUser = (userId, users) => {
   };
 };
 
-// export const editUser = (userId) => {
-//   return async (dispatch, getState) => {
-//     const user = users.find((user) => {
-//       return user.id === parseInt(userId);
-//     });
-//     dispatch(findUser(user));
-//   };
-// };
+export const editUser = (userId, users, newUser) => {
+  return async (dispatch, getState) => {
+    dispatch(fetchUser(newUser));
+  };
+};
