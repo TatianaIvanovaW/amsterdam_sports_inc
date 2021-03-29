@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { selectAllUsers } from "../../store/users/selector";
 import { findAllUsers, deleteUser } from "../../store/users/action";
-import { Card, Button, Row } from "react-bootstrap";
+import { Card, Button, Row, Alert } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import "./members.css";
 
@@ -13,6 +13,12 @@ export default function Members() {
   const handleShow = () => setShow(true);
   const handleClose = () => setShow(false);
   const [show, setShow] = useState(false);
+  const [showAlert, setShowAlert] = useState(false);
+  const [deleteAlert, setDeleteAlert] = useState(false);
+
+  function alert() {
+    setShowAlert(true);
+  }
 
   useEffect(() => {
     dispatch(findAllUsers());
@@ -21,11 +27,33 @@ export default function Members() {
 
   return (
     <div>
+      {showAlert ? (
+        <Alert
+          variant="success"
+          onClose={() => setShowAlert(false)}
+          dismissible
+        >
+          New member added!
+        </Alert>
+      ) : deleteAlert ? (
+        <Alert
+          variant="danger"
+          onClose={() => setDeleteAlert(false)}
+          dismissible
+        >
+          The member deleted
+        </Alert>
+      ) : null}
       <h5 className="userMargin">Our members:</h5>
       <Button variant="success" onClick={handleShow}>
         Add a new member
       </Button>
-      <ModalMessage users={users} show={show} handleClose={handleClose} />
+      <ModalMessage
+        alert={alert}
+        users={users}
+        show={show}
+        handleClose={handleClose}
+      />
       <Row className="justify-content-md-left">
         {users.map((user) => {
           return (
@@ -44,6 +72,7 @@ export default function Members() {
                 <Button
                   onClick={() => {
                     dispatch(deleteUser(user.id, users));
+                    setDeleteAlert(true);
                   }}
                   variant="danger"
                 >

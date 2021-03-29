@@ -12,7 +12,7 @@ export default function ModalMessage(props) {
   const [lastName, setLastName] = useState("");
 
   const sports = useSelector(selectAllSports);
-  let sportId = [];
+  let sportId = props.user ? props.user.sportId : [];
 
   useEffect(() => {
     dispatch(fetchSports());
@@ -32,6 +32,7 @@ export default function ModalMessage(props) {
     };
 
     dispatch(addNewUser(newUser, props.users));
+    props.alert();
   }
 
   return (
@@ -64,8 +65,9 @@ export default function ModalMessage(props) {
                   id="validationCustom01"
                   required
                   type="text"
-                  value={props.user ? props.user.firstName : firstName}
-                  placeholder={!props.user ? "Enter Name" : null}
+                  placeholder={
+                    !props.user ? "First Name" : props.user.firstName
+                  }
                 />
               </div>
               <div className="col-md-4">
@@ -81,8 +83,7 @@ export default function ModalMessage(props) {
                   id="validationCustom02"
                   required
                   type="text"
-                  value={props.user ? props.user.lastName : lastName}
-                  placeholder={!props.user ? "Enter Name" : null}
+                  placeholder={!props.user ? "Last Name" : props.user.lastName}
                 />
               </div>
             </Row>
@@ -102,7 +103,7 @@ export default function ModalMessage(props) {
                       });
                     }
                   }}
-                  checked={props.user?.sportId?.includes(sport.id)}
+                  checked={sportId?.includes(sport.id)}
                   value={sport.id}
                   key={sport.id}
                   inline
@@ -115,7 +116,12 @@ export default function ModalMessage(props) {
                   <Form.Label>Upload picture</Form.Label>
                 </Row>
                 <Row>
-                  <input type="file"></input>
+                  <input // upload image
+                    type="file"
+                    style={{ display: "none" }}
+                    id="fileElem"
+                    accept="image/x-png,image/jpeg"
+                  />
                 </Row>
               </Col>
               <Row>

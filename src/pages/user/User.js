@@ -8,7 +8,15 @@ import { selectUser } from "../../store/user/selector";
 import { findUser } from "../../store/user/action";
 import { selectAllSports } from "../../store/sports/selector";
 import { fetchSports } from "../../store/sports/action";
-import { Button, Image, Row, Badge, Col, Spinner } from "react-bootstrap";
+import {
+  Button,
+  Image,
+  Row,
+  Badge,
+  Col,
+  Spinner,
+  Alert,
+} from "react-bootstrap";
 
 import "./user.css";
 
@@ -21,13 +29,27 @@ export default function UserPage() {
   const handleShow = () => setShow(true);
   const handleClose = () => setShow(false);
   const [show, setShow] = useState(false);
+  const [showAlert, setShowAlert] = useState(false);
   useEffect(() => {
     dispatch(findUser(params.id, users));
     dispatch(fetchSports());
   }, [dispatch, params.id, users]);
 
+  function alert() {
+    setShowAlert(true);
+  }
+
   return (
     <div>
+      {showAlert ? (
+        <Alert
+          variant="success"
+          onClose={() => setShowAlert(false)}
+          dismissible
+        >
+          The member edited!
+        </Alert>
+      ) : null}
       {user ? (
         <Row>
           <Col>
@@ -48,7 +70,12 @@ export default function UserPage() {
               <Button variant="info" onClick={handleShow}>
                 Edit
               </Button>
-              <ModalMessage show={show} user={user} handleClose={handleClose} />
+              <ModalMessage
+                alert={alert}
+                show={show}
+                user={user}
+                handleClose={handleClose}
+              />
             </Row>
           </Col>
         </Row>
