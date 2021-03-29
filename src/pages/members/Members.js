@@ -17,7 +17,6 @@ export default function Members() {
   useEffect(() => {
     dispatch(findAllUsers());
   }, [dispatch]);
-
   const users = useSelector(selectAllUsers);
 
   return (
@@ -26,7 +25,7 @@ export default function Members() {
       <Button variant="success" onClick={handleShow}>
         Add a new member
       </Button>
-      <ModalMessage show={show} handleClose={handleClose} />
+      <ModalMessage users={users} show={show} handleClose={handleClose} />
       <Row className="justify-content-md-left">
         {users.map((user) => {
           return (
@@ -44,7 +43,7 @@ export default function Members() {
 
                 <Button
                   onClick={() => {
-                    dispatch(deleteUser(user.id));
+                    dispatch(deleteUser(user.id, users));
                   }}
                   variant="danger"
                 >

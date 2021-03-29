@@ -1,5 +1,3 @@
-import { users } from "../../data/users";
-
 export const fetchUser = (user) => {
   return {
     type: "fetch/user",
@@ -7,7 +5,7 @@ export const fetchUser = (user) => {
   };
 };
 
-export const findUser = (userId) => {
+export const findUser = (userId, users) => {
   return async (dispatch, getState) => {
     const user = users.find((user) => {
       return user.id === parseInt(userId);

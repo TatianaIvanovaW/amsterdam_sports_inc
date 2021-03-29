@@ -1,19 +1,18 @@
 import React from "react";
-import { Modal, Form, Button, Row, Col } from "react-bootstrap";
+import { Modal, Form, Button, Row } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
 import { selectAllSports } from "../store/sports/selector";
 import { fetchSports } from "../store/sports/action";
+import { addNewUser } from "../store/users/action";
 
 export default function ModalMessage(props) {
   const dispatch = useDispatch();
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
 
-  const [user, setUser] = useState({});
   const sports = useSelector(selectAllSports);
   let sportId = [];
-  console.log(`user`, user);
 
   useEffect(() => {
     dispatch(fetchSports());
@@ -21,14 +20,16 @@ export default function ModalMessage(props) {
 
   function saveChanges() {
     props.handleClose();
+
     const newUser = {
       id: props.user ? props.user.id : 13,
-      firtsName: firstName ? firstName : props.user.firstName,
+      firstName: firstName ? firstName : props.user.firstName,
       lastName: lastName ? lastName : props.user.lastName,
       sportId: sportId.length > 0 ? sportId : props.user.sportId,
-      photo: "",
+      photo: props.user?.photo,
     };
-    setUser(newUser);
+
+    dispatch(addNewUser(newUser, props.users));
   }
 
   return (
@@ -53,6 +54,8 @@ export default function ModalMessage(props) {
                 </label>
                 <input
                   onChange={(e) => {
+                    e.preventDefault();
+
                     setFirstName(e.target.value);
                   }}
                   className="form-control"
@@ -64,7 +67,7 @@ export default function ModalMessage(props) {
                 />
               </div>
               <div className="col-md-4">
-                <label htmlFor="validationCustom02" class="form-label">
+                <label htmlFor="validationCustom02" className="form-label">
                   Last name
                 </label>
                 <input

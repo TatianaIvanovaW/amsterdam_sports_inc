@@ -14,11 +14,19 @@ export const findAllUsers = () => {
   };
 };
 
-export const deleteUser = (userId) => {
+export const deleteUser = (userId, allUsers) => {
   return async (dispatch, getState) => {
-    const data = users.filter((user) => {
+    const data = allUsers.filter((user) => {
       return user.id !== userId;
     });
+    dispatch(fetchUsers(data));
+  };
+};
+
+export const addNewUser = (newUser, allUsers) => {
+  return async (dispatch, getState) => {
+    const data = allUsers;
+    data.push(newUser);
     dispatch(fetchUsers(data));
   };
 };
