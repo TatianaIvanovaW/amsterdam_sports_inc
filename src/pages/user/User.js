@@ -40,7 +40,7 @@ export default function UserPage() {
   }
 
   return (
-    <div>
+    <div className="userMargin">
       {showAlert ? (
         <Alert
           variant="success"
